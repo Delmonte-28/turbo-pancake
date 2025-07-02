@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Samurai Journey Portal</title>
+ <style>
+@font-face {
+  font-family: 'Cinzel';
+  src: url('asset/Cinzel-Regular 2 .ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+  font-family: 'Cinzel', serif;
+  background: url('samurai_wallpaper.png') no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(6px);
+  display: none;
+  padding: 60px 30px;
+  overflow-y: auto;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  opacity: 0;
+  transform: translateY(50px);
+}
+.page.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+.center-content {
+  max-width: 1000px;
+  margin: 60px auto;
+  text-align: center;
+  padding: 40px;
+  border-radius: 20px;
+  animation: fadeIn 1.5s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+h1, h2, h3 {
+  color: #ff3b3f;
+}
+p {
+  color: #ccc;
+  line-height: 1.6;
+}
+a.button {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 12px 25px;
+  background-color: #ff3b3f;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+a.button:hover {
+  background-color: #e23236;
+  transform: scale(1.05);
+}
+.features, .gallery {
+  display: grid;
+  gap: 30px;
+}
+.features {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.gallery {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  margin-top: 40px;
+}
+.feature, .card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+.feature:hover, .card:hover {
+  transform: scale(1.05);
+}
+.card img, .gallery img {
+  width: 100%;
+  border-radius: 10px;
+}
+.card h3 {
+  margin-top: 10px;
+}
+.login-form {
+  text-align: center;
+  color: white;
+}
+.login-form input {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 90%;
+  max-width: 300px;
+}
+.login-form button {
+  padding: 10px 20px;
+  background: #ff3b3f;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.login-form button:hover {
+  background: #e23236;
+}
+.bottom-back {
+  margin-top: 60px;
+  text-align: center;
+}
+.bottom-back a {
+  padding: 10px 20px;
+  background-color: #3fafff;
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.bottom-back a:hover {
+  background-color: #3498db;
+  transform: scale(1.05);
+}
+.card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.card .info-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(63, 63, 63, 0.8);
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  transform: translateY(100%);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.card:hover .info-overlay {
+  transform: translateY(0);
+  opacity: 1;
+}
+.card img {
+  transition: transform 0.5s ease;
+}
+.card:hover img {
+  transform: scale(1.05);
+  filter: brightness(70%);
+}
+
+/* ---------------------------- */
+/* ✅ Mobile Responsive Styling */
+/* ---------------------------- */
+@media (max-width: 768px) {
+  .center-content {
+    padding: 20px;
+    margin: 30px auto;
+  }
+  h1 {
+    font-size: 1.8em;
+  }
+  h2 {
+    font-size: 1.4em;
+  }
+  p {
+    font-size: 0.95em;
+  }
+  a.button {
+    font-size: 0.9em;
+    padding: 10px 20px;
+  }
+  .login-form input {
+    width: 90%;
+  }
+}
+</style>
+</head>
+<body>
+  <div id="loginPage" class="page active">
+    <div class="center-content">
+      <h1>Welcome to the Samurai Journey</h1>
+      <p>Press Begin Journey to Login</p>
+      <a href="#" class="button" onclick="showPage('loginFormPage')">Begin Journey</a>
+    </div>
+  </div>
+
+  <div id="loginFormPage" class="page">
+    <div class="center-content login-form">
+      <h2>Login Required</h2>
+      <input type="text" id="username" placeholder="Username"><br>
+      <input type="password" id="password" placeholder="What's the developer last name?"><br>
+      <button onclick="validateLogin()">Login</button>
+    </div>
+  </div>
+
+  <div id="wayOfLifePage" class="page">
+    <div class="center-content">
+      <h1>Samurai Way of Life</h1>
+      <div class="features">
+        <div class="feature"><h2>Honor</h2><p>A samurai lives and dies by a code of honor, holding integrity above all else.</p></div>
+        <div class="feature"><h2>Discipline</h2><p>Through rigorous training and self-control, the samurai refines both body and mind.</p></div>
+        <div class="feature"><h2>Loyalty</h2><p>Unwavering loyalty to their master defines a true samurai’s path.</p></div>
+        <div class="feature"><h2>Mastery</h2><p>From the sword to the tea ceremony, a samurai seeks perfection in every pursuit.</p></div>
+      </div>
+      <a href="#" class="button" onclick="showPage('virtueGalleryPage')">→ View Virtue Gallery</a>
+      <div class="bottom-back">
+        <a href="#" onclick="showPage('loginPage')">← Back to Homepage</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="virtueGalleryPage" class="page">
+    <div class="center-content">
+      <h1>Samurai Virtue Gallery</h1>
+      <div class="gallery">
+       <div class="card" onclick="showPage('honorStory')">
+  <img src="asset/samurai1.jpg">
+  <div class="info-overlay">
+  <h3>Takeda Shingen
+</h3>
+    <p>Birthplace: Kai Province</p>
+    <p>Age: 45</p>
+  </div>
+</div>
+<div class="card" onclick="showPage('disciplineStory')">
+  <img src="asset/samurai2.jpg">
+  <div class="info-overlay">
+    <h3>Takeda Shingen</h3>
+    <p>Birthplace: Kai Province</p>
+    <p>Age: 45</p>
+  </div>
+</div>
+
+<div class="card" onclick="showPage('loyaltyStory')">
+  <img src="asset/samurai3.jpg">
+  <div class="info-overlay">
+    <h3>Takeda Shingen</h3>
+    <p>Birthplace: Kai Province</p>
+    <p>Age: 45</p>
+  </div>
+</div>
+<div class="card" onclick="showPage('masteryStory')">
+  <img src="asset/samurai4.jpg">
+  <div class="info-overlay">
+    <h3>Takeda Shingen</h3>
+    <p>Birthplace: Kai Province</p>
+    <p>Age: 45</p>
+  </div>
+</div>
+      </div>
+      <a href="#" class="button" onclick="showPage('wayOfLifePage')">← Back</a>
+    </div>
+  </div>
+
+  <div id="honorStory" class="page">
+    <div class="center-content">
+      <h2>Honor</h2>
+      <p>Honor is the guiding principle that every samurai upholds. It governs his words, his actions, and his final breath. In ancient Japan, to lose one's honor was worse than death itself. Samurai lived with unwavering integrity, defending their values even in the face of death. In battle and in peace, they stood as paragons of virtue, setting an example for generations.</p>
+      <a href="#" class="button" onclick="showPage('virtueGalleryPage')">← Back to Gallery</a>
+    </div>
+  </div>
+
+  <div id="disciplineStory" class="page">
+    <div class="center-content">
+      <h2>Discipline</h2>
+      <p>Discipline was the foundation upon which the samurai built their greatness. Rising before dawn, they practiced for hours, sharpening their minds as keenly as their blades. It was through self-restraint and relentless routine that they became masters, never swayed by emotion but guided by control and clarity in every decision they made.</p>
+      <a href="#" class="button" onclick="showPage('virtueGalleryPage')">← Back to Gallery</a>
+    </div>
+  </div>
+
+  <div id="loyaltyStory" class="page">
+    <div class="center-content">
+      <h2>Loyalty</h2>
+      <p>A samurai’s soul is bonded to their lord by unwavering loyalty. This devotion wasn't born from fear, but respect and duty. No matter the hardship, no matter the command, the samurai followed with faith. It is this loyalty that elevated them to more than soldiers — they were guardians of a greater ideal, placing others above self.</p>
+      <a href="#" class="button" onclick="showPage('virtueGalleryPage')">← Back to Gallery</a>
+    </div>
+  </div>
+
+  <div id="masteryStory" class="page">
+    <div class="center-content">
+      <h2>Mastery</h2>
+      <p>True mastery is not confined to the battlefield. A samurai pursued perfection in all endeavors — calligraphy, music, poetry, tea. Each stroke of the brush or movement of the blade was art in motion. Mastery meant never ceasing to learn, and seeing beauty and precision in even the smallest acts. It was a lifelong journey, not a destination.</p>
+      <a href="#" class="button" onclick="showPage('virtueGalleryPage')">← Back to Gallery</a>
+    </div>
+  </div>
+
+  <script>
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      setTimeout(() => {
+        document.getElementById(pageId).classList.add('active');
+      }, 100);
+    }
+
+    function validateLogin() {
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      if (user === "ID28062004" && pass === "1111") {
+        showPage('wayOfLifePage');
+      } else {
+        alert("Incorrect credentials. Try again.");
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      const pages = ['loginPage','loginFormPage','wayOfLifePage','virtueGalleryPage','honorStory','disciplineStory','loyaltyStory','masteryStory'];
+      let index = pages.findIndex(id => document.getElementById(id).classList.contains('active'));
+      if (e.key === 'ArrowRight') {
+        showPage(pages[(index + 1) % pages.length]);
+      } else if (e.key === 'ArrowLeft') {
+        showPage(pages[(index - 1 + pages.length) % pages.length]);
+      }
+    });
+  </script>
+</body>
+</html>
